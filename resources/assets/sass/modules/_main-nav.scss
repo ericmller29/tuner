@@ -1,0 +1,32 @@
+.main-nav{
+	a{
+		font-weight: bold;
+		text-transform: uppercase;
+		margin-right: 15px;
+		display: inline-block;
+
+		&:after{
+			content: '';
+			display: none;
+			height: 3px;
+			background: $brand-primary;
+			margin-top: 3px;
+		}
+
+		&.active{
+			color: $brand-primary;
+
+			&:after{
+				display: block;
+			}
+		}
+
+		&:hover{
+			text-decoration: none;
+
+			&:after{
+				display: block;
+			}
+		}
+	}
+}

@@ -1,0 +1,22 @@
+.search{
+	position: relative;
+
+	input{
+		display: block;
+		width: 100%;
+		padding: 10px;
+		border: solid 1px #eee;
+		margin-bottom: 15px;
+	}
+
+	i.search-btn{
+		pointer-events: none;
+	}
+
+	i{
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		transform: translateY(-50%);
+	}
+}
