@@ -1,0 +1,93 @@
+.scrubber{
+	position: absolute;
+	top: -3px;
+	z-index: 999;
+	width: 100%;
+	left: 0;
+	transition: top 0.3s;
+
+	.buffer{
+		background: #222;
+		opacity: 0.3;
+		width: 100%;
+		height: 3px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+		transition: height 0.3s, top 0.3s;
+		cursor: pointer;
+	}
+
+	.time{
+		background: $brand-alt;
+		width: 40%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 3px;
+		z-index: 5;
+		transition: height 0.3s, top 0.3s;
+	}
+
+	/*
+	* No UI slider styling
+	*/
+	&.noUi-target{
+		border: none;
+		box-shadow: none;
+		background: rgba(#222, 0.3);
+		border-radius: 0;
+		cursor: pointer;
+		padding: 0 5px;
+	}
+
+	&.noUi-horizontal{
+		height: 3px;
+		transition: height 0.3s, top 0.3s;
+
+		&:before{
+			content: '';
+			position: absolute;
+			top: 0;
+			height: 100%;
+			left: 0;
+			width: 5px;
+			background: $brand-alt;
+		}
+
+		@include bp(medium){
+			top: -8px;
+			height: 8px;
+		}
+
+		.noUi-handle{
+			width: 10px;
+			height: 26px;
+			top: -10px;
+			left: auto;
+			right: 5px;
+		}
+	}
+	.noUi-connect{
+		box-shadow: none;
+		background: $brand-alt;
+	}
+	.noUi-handle{
+		box-shadow: none;
+		border: none;
+		cursor: pointer;
+		background: $brand-alt;
+		border-radius: 0;
+		opacity: 0;
+		transition: opacity 0.3s;
+
+		&:before, &:after{
+			display: none;
+		}
+
+		@include bp(medium){
+			opacity: 1;
+		}
+	}
+}

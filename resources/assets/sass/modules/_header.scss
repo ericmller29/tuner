@@ -1,0 +1,16 @@
+.header{
+	margin-bottom: 10px;
+	width: 100%;
+	position: relative;
+
+	.logo{
+		margin: 0;
+		font-family: 'Poppins', sans-serif;
+		font-size: 3em;
+		color: #444;
+
+		span{
+			color: $brand-primary;
+		}
+	}
+}

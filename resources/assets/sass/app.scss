@@ -1,26 +1,25 @@
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,600,600i,700,700i);
-
 @import "variables";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
-// Variables
 @import "mixins";
+@import "global";
 
-html {
-	box-sizing: border-box;
-}
-*, *:before, *:after {
-	box-sizing: inherit;
-}
-body{
-	padding-top: 25px;
-}
-@import "modules/form-input";
-@import "modules/search";
-@import "modules/search-results";
+@import "plugins/nouislider";
+
+@import "elements/container";
+@import "elements/volume-slider";
+@import "elements/form-input";
+
+@import "modules/header";
+@import "modules/user";
+@import "modules/modal";
+
 @import "modules/player";
-@import "modules/main-content";
+@import "modules/player-controls";
+@import "modules/scrubber";
+@import "modules/artist-info";
+
+@import "modules/content";
+@import "modules/search";
+
 @import "modules/main-nav";
-@import "modules/songs";
-@import "elements/song";
+@import "modules/song-list";

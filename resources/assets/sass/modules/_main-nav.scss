@@ -1,35 +1,35 @@
 .main-nav{
 	display: block;
-	margin-bottom: 25px;
-	
+	margin-bottom: 20px;
+
 	a{
-		font-weight: bold;
-		text-transform: uppercase;
-		margin-right: 15px;
 		display: inline-block;
+		margin-right: 15px;
+		text-decoration: none;
+		color: $brand-primary;
+		font-weight: bold;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		position: relative;
 
 		&:after{
 			content: '';
 			display: none;
+			position: absolute;
+			bottom: -5px;
+			left: 0;
 			height: 3px;
+			margin-top: 5px;
+			width: 100%;
 			background: $brand-primary;
-			margin-top: 3px;
 		}
 
-		&.active{
-			color: $brand-primary;
-
-			&:after{
-				display: block;
-			}
+		&:hover:after, &.active:after{
+			display: block;
 		}
 
-		&:hover{
-			text-decoration: none;
-
-			&:after{
-				display: block;
-			}
+		&:last-child{
+			margin-right: 0;
 		}
 	}
 }

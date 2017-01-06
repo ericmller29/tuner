@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('library');
+    return view('home');
 });
 
 Route::get('search', 'SearchController@search');

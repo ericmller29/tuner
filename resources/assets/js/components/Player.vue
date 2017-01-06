@@ -1,109 +1,193 @@
 <template>
 	<div class="player">
-		<div class="scrubber" v-bind:style="{ width: playPercent + '%' }"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-11">
-					<a href="#" v-on:click="play($event)" v-if="!playing"><i class="glyphicon glyphicon-play"></i></a>
-					<a href="#" v-on:click="pause($event)" v-if="playing"><i class="glyphicon glyphicon-pause"></i></a>
-					<span class="song-title">{{ currentSong.title }}</span>
-					<div id="audio"></div>
-				</div>
-				<div class="col-xs-1 text-right">
-					<a href="#" v-if="!muted" v-on:click="mute"><i class="glyphicon glyphicon-volume-up"></i></a>
-					<a href="#" v-if="muted" v-on:click="unmute"><i class="glyphicon glyphicon-volume-off"></i></a>
-				</div>
+		<div class="album-art">
+			<div class="artist-info">
+				<span class="artist">The Bouncing Souls</span>
+				<span class="song">Lean on me Sheena</span>
 			</div>
+			<div class="default">
+				<i class="fa fa-headphones"></i>
+			</div>
+			<div id="audio"></div>
 		</div>
+		<nav class="player-controls">
+			<div class="scrubber" id="scrubber"></div>
+			<a href="#">
+				<i class="fa fa-backward"></i>
+			</a>
+			<a href="#" class="play-btn" v-on:click="playPauseClick($event)">
+				<i class="fa fa-play" v-if="!playing"></i>
+				<i class="fa fa-pause" v-if="playing"></i>
+			</a>
+			<a href="#">
+				<i class="fa fa-forward"></i>
+			</a>
+			<div class="volume">
+				<a href="#">
+					<i class="fa fa-volume-up"></i>
+				</a>
+				<div class="volume-slider" id="volume"></div>
+			</div>
+		</nav>
 	</div>
 </template>
+
 <script>
+	window.player = null;
+
 	export default{
 		data: function(){
 			return {
+				scrubber: null,
+				volume: null,
 				playing: false,
 				playTimer: null,
-				playPercent: 0,
-				currentSong: {},
-				muted: false
+				playPercent: 0
 			}
 		},
 		beforeCreate(){
+			/*
+			* Set up the stupid youtube library.
+			* I don't know why it has to be done this way,
+			* but either way here we are.
+			*/
 			var tag = document.createElement('script');
 
 			tag.src = "https://www.youtube.com/iframe_api";
 			var firstScriptTag = document.getElementsByTagName('script')[0];
 			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-			window.player = null;
 		},
 		mounted(){
 			var _this = this;
 
+			_this.scrubber = document.getElementById('scrubber'),
+			_this.volume = document.getElementById('volume');
+
+			/*
+			* Playback Scrubber
+			*/
+			noUiSlider.create(scrubber, {
+				start: [0],
+				connect: [true, false],
+				padding: 0,
+				range: {
+					'min': [0],
+					'max': [100]
+				}
+			});
+			_this.scrubber.noUiSlider.on('start', _this.slide);
+			_this.scrubber.noUiSlider.on('end', _this.addSlideBack);
+			_this.scrubber.noUiSlider.on('slide', _this.changePlace);
+
+			/*
+			* Volume Slider
+			*/
+			// volume.setAttribute('disabled', true);
+			noUiSlider.create(volume, {
+				start: [100],
+				connect: [true, false],
+				range: {
+					'min': [0],
+					'max': [100]
+				}
+			});
+			_this.volume.noUiSlider.on('update', _this.changeVolume);
+
 			window.onYouTubeIframeAPIReady = function(){
-			    player = new YT.Player('audio', {
-			        width: 1,
-			        height: 1,
-			        videoId: null,
+				player = new YT.Player('audio', {
+					width: 1,
+					height: 1,
+					videoId: 'zQwqC8t-5ag',
 					events: {
+						'onReady': _this.playerReady,
 						'onStateChange': _this.stateChange
 					}
-			    });
+				});
 			}
-		},
-		created(){
-			var _this = this;
 
-			PlayerActions.$on('newSong', (song) => {
-				player.loadVideoById(song.id.videoId, 'small');
-				_this.currentSong = song.snippet;
-				player.playVideo();
-			});
-
-			PlayerActions.$on('pauseSong', () => {
-				// _this.pause();
-				player.pauseVideo();
-			});
+			PlayerEvents.$on('playSong', _this.playPause)
 		},
 		methods: {
-			play: function(e){
-				player.playVideo();
+			playerReady: function(){
+				var _this = this;
+
+				// player.playVideo();
+				_this.scrubber.setAttribute('disabled', true);
+			},
+			playPauseClick: function(e){
+				this.playPause();
 				e.preventDefault();
 			},
-			pause: function(e){
-				player.pauseVideo();
-				e.preventDefault();
-			},
-			mute: function(){
-				player.mute();
-				this.muted = true;
-			},
-			unmute: function(){
-				player.unMute();
-				this.muted = false;
+			playPause: function(){
+				if(this.playing){
+					player.pauseVideo();
+				}else{
+					player.playVideo();
+				}
+
+				this.playing = !this.playing;
+
+				// e.preventDefault();
 			},
 			stateChange: function(e){
-				clearInterval(this.playTimer);
+				var _this = this;
 
-				if(e.data === 1){
-					this.playTimer = setInterval(this.updateScrubber, 1);
-					this.playing = true;
-				}else if(e.data === 0){
-					this.playing = false;
-					this.playPercent = 0;
-					PlayerActions.$emit('songStopped');
-					this.currentSong = {};
-				}else if(e.data === 2){
-					this.playing = false;
+				clearInterval(_this.playTimer);
+
+				if(e.data === -1){ //player not started
+					_this.scrubber.setAttribute('disabled', true);
+				}else if(e.data === 0){//song ended
+					_this.scrubber.setAttribute('disabled', true);
+					
+					_this.playPercent = 0;
+					_this.playing = false;
+					_this.scrubber.noUiSlider.set(0);
+				}else if(e.data === 1){//song playing
+					_this.scrubber.removeAttribute('disabled');
+
+					_this.playTimer = setInterval(function(){
+						_this.updateScrubber();
+					}, 100);
+				}else if(e.data === 2){//song paused
+					_this.scrubber.removeAttribute('disabled');
 				}
 			},
 			updateScrubber: function(){
-				var currentTime = Math.round(player.getCurrentTime()),
-					totalTime = Math.round(player.getDuration()),
-					percent = (player.getCurrentTime() / player.getDuration()) * 100;
+				var _this = this;
 
-				// console.log(percent);
-				this.playPercent = percent;
+				_this.playPercent = (player.getCurrentTime() / player.getDuration()) * 100;
+				_this.scrubber.noUiSlider.set(_this.playPercent);
+			},
+			changeVolume: function(vol){
+				if(!player){
+					return false;
+				}
+
+				var volume = vol[0] / 1;
+
+				player.setVolume(volume);
+			},
+			slide: function(){
+				this.playPause();
+
+				this.scrubber.noUiSlider.off('slide');
+			},
+			addSlideBack: function(t){
+				this.scrubber.noUiSlider.on('slide', this.changePlace);
+
+				this.changePlace(t);
+			},
+			changePlace: function(t){
+				if(!player){
+					return false;
+				}
+
+				var time = player.getDuration() * (t[0] / 100);
+				player.playVideo();
+				player.seekTo(time);
+
+				this.playing = true;
+				this.playPercent = time * 100;
 			}
 		}
 	}

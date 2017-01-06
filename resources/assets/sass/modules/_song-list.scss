@@ -1,0 +1,24 @@
+.song-list{
+	counter-reset: songs;
+
+	div{
+		counter-increment: songs;
+		position: relative;
+		padding: 15px;
+		padding-left: 40px;
+		border-bottom: solid 1px #eee;
+		letter-spacing: 1px;
+		line-height: 17px;
+
+		&:before{
+			content: counter(songs, decimal-leading-zero) ". ";
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #ddd;
+			font-weight: bold;
+			font-size: 1.3em;
+		}
+	}
+}

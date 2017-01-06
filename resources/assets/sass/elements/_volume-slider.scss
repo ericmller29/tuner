@@ -1,0 +1,48 @@
+.volume-slider{
+	position: absolute;
+    width: 100px;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+
+	/*
+	* No UI slider styling
+	*/
+	&.noUi-target{
+		border: none;
+		box-shadow: none;
+		background: rgba(#222, 0.3);
+		border-radius: 0;
+		cursor: pointer;
+	}
+
+	&.noUi-horizontal{
+		height: 3px;
+
+		.noUi-handle{
+			width: 4px;
+			height: 15px;
+			top: -7px;
+			left: auto;
+		}
+	}
+	.noUi-connect{
+		box-shadow: none;
+		background: $brand-alt;
+	}
+	.noUi-handle{
+		box-shadow: none;
+		border: none;
+		cursor: pointer;
+		background: $brand-alt;
+		border-radius: 0;
+
+		&:before, &:after{
+			display: none;
+		}
+
+		@include bp(medium){
+			opacity: 1;
+		}
+	}
+}

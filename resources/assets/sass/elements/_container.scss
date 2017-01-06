@@ -1,0 +1,15 @@
+.container{
+	width: 100%;
+	max-width: 960px;
+	margin: 0 auto;
+
+	@include bp(medium){
+		padding: 0 20px;
+	}
+
+	&:after{
+		display: block;
+		content: '';
+		clear: both;
+	}
+}
