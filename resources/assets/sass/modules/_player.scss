@@ -3,11 +3,14 @@
 	width: 100%;
 	position: relative;
 	margin-bottom: 25px;
+	border-radius: 4px;
+	box-shadow: 0 4px 0 rgba(#000, 0.1);
+	overflow: hidden;
 
-	.album-art iframe{
-		width: 0 !important;
-		height: 0 !important;
-	}
+	// .album-art iframe{
+	// 	width: 0 !important;
+	// 	height: 0 !important;
+	// }
 	.album-art{
 		width: 100%;
 		min-height: 100px;

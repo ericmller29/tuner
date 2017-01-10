@@ -24,7 +24,7 @@
 			background: $brand-primary;
 		}
 
-		&:hover:after, &.active:after{
+		&:hover:after, &.router-link-active:after{
 			display: block;
 		}
 

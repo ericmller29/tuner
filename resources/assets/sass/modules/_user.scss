@@ -5,6 +5,15 @@
 	right: 0;
 	transform: translateY(-50%);
 
+	// .btn{
+	// 	margin-right: 10px;
+	// 	font-size: 0.9em;
+
+	// 	&:last-child{
+	// 		margin-right: 0;
+	// 	}
+	// }
+
 	img{
 		width: 40px;
 		border: solid 4px rgba(#000, 0.1);
@@ -19,4 +28,25 @@
 		font-size: 1.1em;
 		font-weight: bold;
 	}
+
+	.user-nav{
+		display: inline-block;
+		vertical-align: middle;
+		color: #444;
+	}
+	// .user-nav a{
+	// 	display: inline-block;
+	// 	color: #fff;
+	// 	background: $brand-primary;
+	// 	text-transform: uppercase;
+	// 	font-weight: bold;
+	// 	padding: 5px 10px;
+	// 	margin-left: 10px;
+	// 	text-decoration: none;
+	// 	transition: 0.3s;
+
+	// 	&:hover{
+	// 		background: lighten($brand-primary, 10);
+	// 	}
+	// }
 }

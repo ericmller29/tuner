@@ -1,0 +1,27 @@
+.btn{
+	border: none;
+	background: $brand-primary;
+	color: #fff;
+	letter-spacing: 2px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px 10px;
+	cursor: pointer;
+	transition: background 0.3s;
+	font-size: 1em;
+	text-decoration: none;
+
+	&.margin-left{
+		margin-left: 15px;
+	}
+
+	&.full-width{
+		width: 100%;
+		text-align: center;
+		padding: 10px;
+	}
+
+	&:hover{
+		background: lighten($brand-primary, 10);
+	}
+}

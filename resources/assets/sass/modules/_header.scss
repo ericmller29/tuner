@@ -7,10 +7,19 @@
 		margin: 0;
 		font-family: 'Poppins', sans-serif;
 		font-size: 3em;
-		color: #444;
 
-		span{
-			color: $brand-primary;
+		a{
+			color: #444;
+			text-decoration: none;
+
+			span{
+				color: $brand-primary;
+				transition: color 0.3s;
+			}
+
+			&:hover span{
+				color: darken($brand-primary, 10);
+			}
 		}
 	}
 }

@@ -1,0 +1,26 @@
+.message{
+	width: 100%;
+	padding: 5px 10px;
+	margin-bottom: 20px;
+    font-size: 1.1em;
+    letter-spacing: 2px;
+	color: #fff;
+
+	i{
+		font-size: 1.5em;
+		margin-right: 10px;
+		position: relative;
+		top: 3px;
+	}
+}
+.success{
+	background: $success;
+
+	p{
+		display: inline-block;
+	}
+}
+
+.error{
+	background: #BF0000;
+}

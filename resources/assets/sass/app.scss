@@ -2,6 +2,7 @@
 @import "variables";
 @import "mixins";
 @import "global";
+@import "animations";
 
 @import "plugins/nouislider";
 
@@ -9,9 +10,11 @@
 @import "elements/volume-slider";
 @import "elements/form-input";
 
+@import "modules/btn";
 @import "modules/header";
 @import "modules/user";
 @import "modules/modal";
+@import "modules/messages";
 
 @import "modules/player";
 @import "modules/player-controls";
@@ -23,3 +26,4 @@
 
 @import "modules/main-nav";
 @import "modules/song-list";
+@import "modules/form";

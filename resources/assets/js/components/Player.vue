@@ -33,13 +33,12 @@
 </template>
 
 <script>
-	window.player = null;
-
 	export default{
 		data: function(){
 			return {
 				scrubber: null,
 				volume: null,
+				player: null,
 				playing: false,
 				playTimer: null,
 				playPercent: 0
@@ -92,15 +91,19 @@
 				}
 			});
 			_this.volume.noUiSlider.on('update', _this.changeVolume);
-
 			window.onYouTubeIframeAPIReady = function(){
-				player = new YT.Player('audio', {
-					width: 1,
-					height: 1,
-					videoId: 'zQwqC8t-5ag',
+				_this.player = new YT.Player('audio', {
+					width: 100,
+					height: 100,
+					videoId: 'bDoqw51G3Do',
 					events: {
 						'onReady': _this.playerReady,
 						'onStateChange': _this.stateChange
+					},
+					playerVars: {
+						'showinfo': 0,
+						'controls': 0, 
+						'rel' : 0
 					}
 				});
 			}
@@ -119,13 +122,15 @@
 				e.preventDefault();
 			},
 			playPause: function(){
-				if(this.playing){
-					player.pauseVideo();
+				var _this = this;
+
+				if(_this.playing){
+					_this.player.pauseVideo();
 				}else{
-					player.playVideo();
+					_this.player.playVideo();
 				}
 
-				this.playing = !this.playing;
+				_this.playing = !_this.playing;
 
 				// e.preventDefault();
 			},
@@ -155,17 +160,19 @@
 			updateScrubber: function(){
 				var _this = this;
 
-				_this.playPercent = (player.getCurrentTime() / player.getDuration()) * 100;
+				_this.playPercent = (_this.player.getCurrentTime() / _this.player.getDuration()) * 100;
 				_this.scrubber.noUiSlider.set(_this.playPercent);
 			},
 			changeVolume: function(vol){
-				if(!player){
+				var _this = this;
+
+				if(!_this.player){
 					return false;
 				}
 
 				var volume = vol[0] / 1;
 
-				player.setVolume(volume);
+				_this.player.setVolume(volume);
 			},
 			slide: function(){
 				this.playPause();
@@ -178,16 +185,18 @@
 				this.changePlace(t);
 			},
 			changePlace: function(t){
-				if(!player){
+				var _this = this;
+
+				if(!_this.player){
 					return false;
 				}
 
-				var time = player.getDuration() * (t[0] / 100);
-				player.playVideo();
-				player.seekTo(time);
+				var time = _this.player.getDuration() * (t[0] / 100);
+				_this.player.playVideo();
+				_this.player.seekTo(time);
 
-				this.playing = true;
-				this.playPercent = time * 100;
+				_this.playing = true;
+				_this.playPercent = time * 100;
 			}
 		}
 	}
