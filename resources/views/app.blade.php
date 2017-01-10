@@ -15,7 +15,7 @@
             <div class="container" data-turbolinks-permanent id="app-header">
                 <header class="header">
                     <h1 class="logo">
-                        <a href="/" alt="Tuner the YouTube music player!">t<span>u</span>ner</a>
+                        <router-link to="/">t<span>u</span>ner</router-link>
                     </h1>
                     <div class="user">
                         @if(!Auth::check())
@@ -25,7 +25,7 @@
                         <nav class="user-nav">
                             <span>Welcome, {{ Auth::user()->username }}</span>
                             <a href="/settings" class="btn margin-left">Settings</a>
-                            <a href="/logout" class="btn margin-left">Logout</a>
+                            <a href="/app/logout" class="btn margin-left">Logout</a>
                         </nav>
                         <img src="https://www.gravatar.com/avatar/{{ md5( strtolower( trim( Auth::user()->email ) ) ) }}?d={{ asset('img/no_avatar.svg') }}&s=40">
                         @endif
@@ -37,13 +37,9 @@
                 <div class="content" v-cloak>
                     <search></search>
                     <nav class="main-nav">
-                        <!-- <a href="#">Popular</a> -->
-<!--                         <a href="/" class="active">My Library</a>
-                        <a href="/playlists">Playlists</a> -->
                         <router-link to="/" exact>My Library</router-link>
                         <router-link to="/playlists" exact>Playlists</router-link>
                     </nav>
-                    <!-- @yield('content') -->
                     <router-view></router-view>
                 </div>
             </div>

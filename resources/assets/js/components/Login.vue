@@ -66,7 +66,7 @@
 
                 _this.working = true;
 
-                axios.post('/login', _this.data)
+                axios.post('/app/login', _this.data)
                     .then(function(payload){
                         window.location = '/';
                     })
