@@ -5,14 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>@yield('title') | Tuner</title>
+        <title>Tuner</title>
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i|Poppins:700" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <script src="https://use.fontawesome.com/3b7fb20a7d.js"></script>
     </head>
     <body>
         <div id="app">
-            <div class="container" data-turbolinks-permanent id="app-header">
+            <div class="container" v-on:keyup.space="playPause">
                 <header class="header">
                     <h1 class="logo">
                         <router-link to="/">t<span>u</span>ner</router-link>

@@ -110,7 +110,7 @@
             register: function(){
                 var _this = this;
 
-                axios.post('/register', _this.data)
+                axios.post('/app/register', _this.data)
                     .then(function(data){
                         _this.success = true;
 

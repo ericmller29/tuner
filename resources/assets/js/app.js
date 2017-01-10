@@ -16,5 +16,10 @@ const app = new Vue({
     data: {
     	showLoginModal: false,
     	showRegisterModal: false
+    },
+    methods: {
+    	playPause: function(){
+    		PlayerEvents.$emit('playSong');
+    	}
     }
 });
