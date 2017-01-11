@@ -9,11 +9,27 @@
 		border-bottom: solid 1px #eee;
 		letter-spacing: 1px;
 		line-height: 17px;
+	}
 
-		&:before{
+	&:not(.no-number){
+		div:before{
 			content: counter(songs, decimal-leading-zero) ". ";
 			position: absolute;
 			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #ddd;
+			font-weight: bold;
+			font-size: 1.3em;
+		}
+	}
+
+	&.no-number{
+		div:before{
+			content: '\f001';
+			font-family: 'FontAwesome';
+			position: absolute;
+			left: 10px;
 			top: 50%;
 			transform: translateY(-50%);
 			color: #ddd;

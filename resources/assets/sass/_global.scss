@@ -14,8 +14,9 @@ html, body{
 }
 body{
 	padding: 25px 0;
+	letter-spacing: 2px;
 }
 .hidden{
 	display: none !important;
 }
-[v-cloak] { display:none; }
+[v-cloak] { display: none !important; }

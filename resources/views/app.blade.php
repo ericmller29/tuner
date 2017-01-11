@@ -11,7 +11,7 @@
         <script src="https://use.fontawesome.com/3b7fb20a7d.js"></script>
     </head>
     <body>
-        <div id="app">
+        <div id="app" v-cloak>
             <div class="container" v-on:keyup.space="playPause">
                 <header class="header">
                     <h1 class="logo">
@@ -34,22 +34,24 @@
                 <player></player>
             </div>
             <div class="container">
-                <div class="content" v-cloak>
-                    <search></search>
-                    <nav class="main-nav">
+                <div class="content">
+                    <search :searching="searching"></search>
+                    <nav class="main-nav" v-if="!searching">
                         <router-link to="/" exact>My Library</router-link>
                         <router-link to="/playlists" exact>Playlists</router-link>
                     </nav>
-                    <router-view></router-view>
+                    <div v-if="!searching">
+                        <router-view></router-view>
+                    </div>
                 </div>
             </div>
-            <modal v-if="showLoginModal" @close="showLoginModal = false" v-cloak>
+            <modal v-if="showLoginModal" @close="showLoginModal = false">
                 <h3 slot="header">Login</h3>
                 <div slot="content">
                     <login></login>
                 </div>
             </modal>
-            <modal v-if="showRegisterModal" @close="showRegisterModal = false" v-cloak>
+            <modal v-if="showRegisterModal" @close="showRegisterModal = false">
                 <h3 slot="header">Register</h3>
                 <div slot="content">
                     <register></register>

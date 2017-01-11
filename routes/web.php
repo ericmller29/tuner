@@ -3,6 +3,7 @@
 Route::group(['prefix' => 'app'], function(){
 	Auth::routes();
 	Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+	Route::post('search', 'SearchController@search');
 });
 
 Route::get('/{vue_capture?}', function () {

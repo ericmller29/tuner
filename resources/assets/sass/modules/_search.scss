@@ -1,7 +1,14 @@
 .search{
 	display: block;
 	width: 100%;
-	margin-bottom: 25px;
+
+	&.margin-bottom{
+		margin-bottom: 25px;
+	}
+
+	i.fa-times{
+		cursor: pointer;
+	}
 
 	input{
 		display: block;

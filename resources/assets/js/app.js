@@ -2,6 +2,7 @@ require('./bootstrap');
 import router from './routes';
 
 window.PlayerEvents = new Vue();
+window.AppEvents = new Vue();
 
 Vue.component('player', require('./components/Player.vue'));
 Vue.component('songs-list', require('./components/SongsList.vue'));
@@ -15,11 +16,22 @@ const app = new Vue({
     router: router,
     data: {
     	showLoginModal: false,
-    	showRegisterModal: false
+    	showRegisterModal: false,
+        searching: false
+    },
+    mounted(){
+        AppEvents.$on('search', this.search);
     },
     methods: {
     	playPause: function(){
     		PlayerEvents.$emit('playSong');
-    	}
+    	},
+        search: function(val){
+            if(!val){
+                this.searching = false;
+                return false;
+            }
+            this.searching = true;
+        }
     }
 });
