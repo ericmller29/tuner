@@ -10,6 +10,10 @@
 		letter-spacing: 1px;
 		line-height: 17px;
 	}
+	span.song-title{
+		display: inline-block;
+		vertical-align: middle;
+	}
 
 	&:not(.no-number){
 		div:before{
@@ -25,9 +29,7 @@
 	}
 
 	&.no-number{
-		div:before{
-			content: '\f001';
-			font-family: 'FontAwesome';
+		a{
 			position: absolute;
 			left: 10px;
 			top: 50%;
@@ -35,6 +37,11 @@
 			color: #ddd;
 			font-weight: bold;
 			font-size: 1.3em;
+			transition: color 0.3s;
+
+			&:hover{
+				color: $brand-primary;
+			}
 		}
 	}
 }

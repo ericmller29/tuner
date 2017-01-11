@@ -10,12 +10,14 @@
 @import "elements/volume-slider";
 @import "elements/form-input";
 @import "elements/not-found";
+@import "elements/badge";
 
 @import "modules/btn";
 @import "modules/header";
 @import "modules/user";
 @import "modules/modal";
 @import "modules/messages";
+@import "modules/music-bar";
 
 @import "modules/player";
 @import "modules/player-controls";
@@ -29,3 +31,4 @@
 @import "modules/main-nav";
 @import "modules/song-list";
 @import "modules/form";
+@import "modules/loader";

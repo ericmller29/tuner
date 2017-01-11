@@ -1,9 +1,9 @@
 <template>
-	<div class="player">
+	<div class="player" :disabled="!songPlaying">
 		<div class="album-art">
-			<div class="artist-info">
-				<span class="artist">The Bouncing Souls</span>
-				<span class="song">Lean on me Sheena</span>
+			<div class="artist-info" v-if="songPlaying">
+				<span class="artist">{{ artist }}</span>
+				<span class="song">{{ song }}</span>
 			</div>
 			<div class="default">
 				<i class="fa fa-headphones"></i>
@@ -41,7 +41,10 @@
 				player: null,
 				playing: false,
 				playTimer: null,
-				playPercent: 0
+				playPercent: 0,
+				songPlaying: null,
+				artist: '',
+				song: ''
 			}
 		},
 		beforeCreate(){
@@ -95,7 +98,7 @@
 				_this.player = new YT.Player('audio', {
 					width: 100,
 					height: 100,
-					videoId: 'bDoqw51G3Do',
+					videoId: _this.songPlaying,
 					events: {
 						'onReady': _this.playerReady,
 						'onStateChange': _this.stateChange
@@ -118,19 +121,37 @@
 				_this.scrubber.setAttribute('disabled', true);
 			},
 			playPauseClick: function(e){
-				this.playPause();
+				if(this.playing){
+					this.player.pauseVideo();
+				}else{
+					this.player.playVideo();
+				}
+				this.playing = !this.playing;
+
 				e.preventDefault();
 			},
-			playPause: function(){
-				var _this = this;
+			playPause: function(song){
+				var _this = this,
+					songSplit = song.snippet.title.split('-');
 
-				if(_this.playing){
-					_this.player.pauseVideo();
-				}else{
+				if(_this.songPlaying === song.id.videoId){
+					if(_this.playing){
+						_this.player.pauseVideo();
+					}else{
+						_this.player.playVideo();
+					}
+					_this.playing = !_this.playing;
+				}else if(_this.songPlaying !== song.id.videoId){
+					_this.artist = songSplit[0].replace(/^\s+|\s+$/g, "");
+					_this.song = songSplit[1].replace(/^\s+|\s+$/g, "");
+
+					_this.songPlaying = song.id.videoId;
+					_this.player.loadVideoById(song.id.videoId);
 					_this.player.playVideo();
-				}
+					_this.playing = true;
 
-				_this.playing = !_this.playing;
+					PlayerEvents.$emit('playing', song.id.videoId);
+				}
 
 				// e.preventDefault();
 			},
@@ -143,7 +164,7 @@
 					_this.scrubber.setAttribute('disabled', true);
 				}else if(e.data === 0){//song ended
 					_this.scrubber.setAttribute('disabled', true);
-					
+					PlayerEvents.$emit('playing', null);
 					_this.playPercent = 0;
 					_this.playing = false;
 					_this.scrubber.noUiSlider.set(0);

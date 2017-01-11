@@ -6,6 +6,7 @@
 	border-radius: 4px;
 	box-shadow: 0 4px 0 rgba(#000, 0.1);
 	overflow: hidden;
+	transition: opacity 0.3s;
 
 	// .album-art iframe{
 	// 	width: 0 !important;
@@ -28,7 +29,7 @@
 			left: 0;
 			top: 0;
 			font-size: 5em;
-			color: rgba(#fff, 0.1);
+			color: rgba(#fff, 0.4);
 
 			i{
 				position: absolute;
@@ -42,5 +43,10 @@
 				}
 			}
 		}
+	}
+
+	&[disabled="disabled"]{
+		opacity: 0.5;
+		pointer-events: none;
 	}
 }
