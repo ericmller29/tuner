@@ -36,7 +36,7 @@
             </div>
             <div class="container">
                 <div class="content">
-                    <search :searching="searching" :current-song="currentSong" :role="{{ Auth::user()->role }}"></search>
+                    <search :searching="searching" :current-song="currentSong"></search>
                     <nav class="main-nav" v-if="!searching">
                         @if(Auth::check())
                         <router-link to="/" exact>My Library</router-link>
