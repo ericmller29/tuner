@@ -21,6 +21,14 @@
 		padding: 10px;
 	}
 
+	&.danger{
+		background: $error;
+
+		&:hover{
+			background: lighten($error, 10);
+		}
+	}
+
 	&:hover{
 		background: lighten($brand-primary, 10);
 	}

@@ -37,8 +37,12 @@
                 <div class="content">
                     <search :searching="searching"></search>
                     <nav class="main-nav" v-if="!searching">
+                        @if(Auth::check())
                         <router-link to="/" exact>My Library</router-link>
                         <router-link to="/playlists" exact>Playlists</router-link>
+                        @else
+                        <router-link to="/" exact>Popular Songs</router-link>
+                        @endif
                     </nav>
                     <div v-if="!searching">
                         <router-view></router-view>

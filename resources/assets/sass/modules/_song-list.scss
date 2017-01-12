@@ -44,4 +44,14 @@
 			}
 		}
 	}
+
+	.btn{
+		width: auto;
+		font-size: 0.8em;
+		color: #fff;
+		position: absolute;
+		top: 50%;
+		right: 15px;
+		transform: translateY(-50%);
+	}
 }

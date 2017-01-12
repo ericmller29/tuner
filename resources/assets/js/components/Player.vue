@@ -5,9 +5,6 @@
 				<span class="artist">{{ artist }}</span>
 				<span class="song">{{ song }}</span>
 			</div>
-			<div class="default">
-				<i class="fa fa-headphones"></i>
-			</div>
 			<div id="audio"></div>
 		</div>
 		<nav class="player-controls">
@@ -96,8 +93,8 @@
 			_this.volume.noUiSlider.on('update', _this.changeVolume);
 			window.onYouTubeIframeAPIReady = function(){
 				_this.player = new YT.Player('audio', {
-					width: 100,
-					height: 100,
+					width: 214,
+					height: 120,
 					videoId: _this.songPlaying,
 					events: {
 						'onReady': _this.playerReady,
@@ -149,9 +146,8 @@
 					_this.player.loadVideoById(song.id.videoId);
 					_this.player.playVideo();
 					_this.playing = true;
-
-					PlayerEvents.$emit('playing', song.id.videoId);
 				}
+				PlayerEvents.$emit('playing', song.id.videoId);
 
 				// e.preventDefault();
 			},
@@ -176,6 +172,7 @@
 					}, 100);
 				}else if(e.data === 2){//song paused
 					_this.scrubber.removeAttribute('disabled');
+					PlayerEvents.$emit('playing', null);
 				}
 			},
 			updateScrubber: function(){

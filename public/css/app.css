@@ -552,6 +552,14 @@ body {
   padding: 10px;
 }
 
+.btn.danger {
+  background: #BF0000;
+}
+
+.btn.danger:hover {
+  background: #f20000;
+}
+
 .btn:hover {
   background: #95dfee;
 }
@@ -642,6 +650,10 @@ body {
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
   position: relative;
+}
+
+.modal-container .content p:first-child {
+  margin-top: 0;
 }
 
 .modal-header {
@@ -859,7 +871,7 @@ body {
 .player .album-art .default i {
   position: absolute;
   top: 48%;
-  left: 20px;
+  left: 15px;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 }
@@ -1064,7 +1076,7 @@ body {
 .artist-info {
   display: block;
   padding: 0;
-  padding-left: 110px;
+  padding-left: 240px;
   letter-spacing: 3px;
   color: #fff;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
@@ -1084,7 +1096,7 @@ body {
 
 @media (max-width: 1250px) {
   .artist-info {
-    padding-left: 10px;
+    padding-left: 240px;
   }
 }
 
@@ -1113,7 +1125,7 @@ body {
   color: #BF0000;
 }
 
-.search input {
+.search .search-box input {
   display: block;
   width: 100%;
   background: #eee;
@@ -1243,6 +1255,17 @@ body {
 
 .song-list.no-number a:hover {
   color: #69D2E7;
+}
+
+.song-list .btn {
+  width: auto;
+  font-size: 0.8em;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .form {
