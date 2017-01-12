@@ -1,0 +1,20 @@
+.mobile-nav-toggle{
+	font-size: 1.5em;
+	padding: 5px 7px;
+	background: $brand-primary;
+	color: #fff;
+	border: none;
+	display: none;
+
+	@include bp(small){
+		display: inline-block;
+	}
+
+	&.active + .user-nav{
+		display: inline-block;
+
+		@include bp(small){
+			display: block;
+		}
+	}
+}

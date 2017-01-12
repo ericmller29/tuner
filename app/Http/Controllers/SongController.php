@@ -62,4 +62,13 @@ class SongController extends Controller
 
     	return response()->json($songs);
     }
+
+    public function removeSong(Request $request){
+    	$song = Song::where('youtube_id', '=', $request->get('songId'))->first();
+    	$user = Auth::user();
+
+    	$song->user()->detach($user->id);
+
+    	return response()->json([$song]);
+    }
 }

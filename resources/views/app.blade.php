@@ -22,12 +22,13 @@
                         <button id="show-modal" @click="showLoginModal = true" class="btn margin-left">Login</button>
                         <button id="show-modal" @click="showRegisterModal = true" class="btn margin-left">Register</button>
                         @else
+                        <button @click="mobileNavToggle = !mobileNavToggle" class="mobile-nav-toggle" v-bind:class="{ active: mobileNavToggle }"><i class="fa fa-bars"></i></button>
                         <nav class="user-nav">
                             <span>Welcome, {{ Auth::user()->username }}</span>
                             <a href="/settings" class="btn margin-left">Settings</a>
                             <a href="/app/logout" class="btn margin-left">Logout</a>
+                            <img src="https://www.gravatar.com/avatar/{{ md5( strtolower( trim( Auth::user()->email ) ) ) }}?d={{ asset('img/no_avatar.svg') }}&s=40">
                         </nav>
-                        <img src="https://www.gravatar.com/avatar/{{ md5( strtolower( trim( Auth::user()->email ) ) ) }}?d={{ asset('img/no_avatar.svg') }}&s=40">
                         @endif
                     </div>
                 </header>
@@ -35,18 +36,19 @@
             </div>
             <div class="container">
                 <div class="content">
-                    <search :searching="searching" :current-song="currentSong"></search>
+                    <search :searching="searching" :current-song="currentSong" :role="{{ Auth::user()->role }}"></search>
                     <nav class="main-nav" v-if="!searching">
                         @if(Auth::check())
                         <router-link to="/" exact>My Library</router-link>
                         <router-link to="/playlists" exact>Playlists</router-link>
+                        @if(Auth::user()->role == 69)
+                        <router-link to="/admin" exact>Admin</router-link>
+                        @endif
                         @else
                         <router-link to="/" exact>Popular Songs</router-link>
                         @endif
                     </nav>
-                    <div v-if="!searching">
-                        <router-view :current-song="currentSong"></router-view>
-                    </div>
+                    <router-view :current-song="currentSong" v-if="!searching"></router-view>
                 </div>
             </div>
             <modal v-if="showLoginModal" @close="showLoginModal = false">

@@ -7,6 +7,7 @@ Route::group(['prefix' => 'app'], function(){
 
 	Route::post('song/check', 'SongController@checkForSong');
 	Route::post('song/create', 'SongController@createSong');
+	Route::post('song/delete', 'SongController@removeSong');
 	Route::get('songs', 'SongController@getSongs');
 });
 

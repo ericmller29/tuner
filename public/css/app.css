@@ -527,6 +527,31 @@ body {
   font-weight: bold;
 }
 
+.mobile-nav-toggle {
+  font-size: 1.5em;
+  padding: 5px 7px;
+  background: #69D2E7;
+  color: #fff;
+  border: none;
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .mobile-nav-toggle {
+    display: inline-block;
+  }
+}
+
+.mobile-nav-toggle.active + .user-nav {
+  display: inline-block;
+}
+
+@media (max-width: 600px) {
+  .mobile-nav-toggle.active + .user-nav {
+    display: block;
+  }
+}
+
 .btn {
   border: none;
   background: #69D2E7;
@@ -558,6 +583,10 @@ body {
 
 .btn.danger:hover {
   background: #f20000;
+}
+
+.btn.just-icon {
+  padding: 4px 3px 5px 6px;
 }
 
 .btn:hover {
@@ -598,6 +627,9 @@ body {
   right: 0;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
+  z-index: 999;
+  width: 100%;
+  text-align: right;
 }
 
 .user img {
@@ -619,6 +651,30 @@ body {
   display: inline-block;
   vertical-align: middle;
   color: #444;
+}
+
+@media (max-width: 600px) {
+  .user .user-nav {
+    display: none;
+    width: 100%;
+    position: absolute;
+    background: #fff;
+    z-index: 9999;
+  }
+  .user .user-nav span, .user .user-nav img {
+    display: none;
+  }
+  .user .user-nav a {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-left: 0;
+    text-align: left;
+    border-top: solid 1px #eee;
+  }
+  .user .user-nav a:first-child {
+    border-top: none;
+  }
 }
 
 .modal-mask {
@@ -855,6 +911,9 @@ body {
 @media (max-width: 600px) {
   .player .album-art {
     min-height: 100px;
+  }
+  .player .album-art iframe {
+    width: 100px;
   }
 }
 
@@ -1097,6 +1156,12 @@ body {
 @media (max-width: 1250px) {
   .artist-info {
     padding-left: 240px;
+  }
+}
+
+@media (max-width: 600px) {
+  .artist-info {
+    padding-left: 120px;
   }
 }
 

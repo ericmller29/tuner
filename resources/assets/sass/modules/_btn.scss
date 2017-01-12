@@ -28,6 +28,9 @@
 			background: lighten($error, 10);
 		}
 	}
+	&.just-icon{
+		padding: 4px 3px 5px 6px;
+	}
 
 	&:hover{
 		background: lighten($brand-primary, 10);

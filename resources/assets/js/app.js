@@ -18,7 +18,8 @@ const app = new Vue({
     	showLoginModal: false,
     	showRegisterModal: false,
         searching: false,
-        currentSong: null
+        currentSong: null,
+        mobileNavToggle: false
     },
     mounted(){
         var _this = this;

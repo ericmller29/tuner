@@ -30,18 +30,20 @@
 </template>
 
 <script>
+	window.player = null;
+
 	export default{
 		data: function(){
 			return {
 				scrubber: null,
 				volume: null,
-				player: null,
 				playing: false,
 				playTimer: null,
 				playPercent: 0,
 				songPlaying: null,
 				artist: '',
-				song: ''
+				song: '',
+				queued: []
 			}
 		},
 		beforeCreate(){
@@ -92,7 +94,7 @@
 			});
 			_this.volume.noUiSlider.on('update', _this.changeVolume);
 			window.onYouTubeIframeAPIReady = function(){
-				_this.player = new YT.Player('audio', {
+				player = new YT.Player('audio', {
 					width: 214,
 					height: 120,
 					videoId: _this.songPlaying,
@@ -109,6 +111,7 @@
 			}
 
 			PlayerEvents.$on('playSong', _this.playPause)
+			PlayerEvents.$on('queue', _this.queueSong);
 		},
 		methods: {
 			playerReady: function(){
@@ -119,9 +122,9 @@
 			},
 			playPauseClick: function(e){
 				if(this.playing){
-					this.player.pauseVideo();
+					player.pauseVideo();
 				}else{
-					this.player.playVideo();
+					player.playVideo();
 				}
 				this.playing = !this.playing;
 
@@ -133,9 +136,9 @@
 
 				if(_this.songPlaying === song.id.videoId){
 					if(_this.playing){
-						_this.player.pauseVideo();
+						player.pauseVideo();
 					}else{
-						_this.player.playVideo();
+						player.playVideo();
 					}
 					_this.playing = !_this.playing;
 				}else if(_this.songPlaying !== song.id.videoId){
@@ -143,8 +146,8 @@
 					_this.song = songSplit[1].replace(/^\s+|\s+$/g, "");
 
 					_this.songPlaying = song.id.videoId;
-					_this.player.loadVideoById(song.id.videoId);
-					_this.player.playVideo();
+					player.loadVideoById(song.id.videoId);
+					player.playVideo();
 					_this.playing = true;
 				}
 				PlayerEvents.$emit('playing', song.id.videoId);
@@ -153,7 +156,6 @@
 			},
 			stateChange: function(e){
 				var _this = this;
-
 				clearInterval(_this.playTimer);
 
 				if(e.data === -1){ //player not started
@@ -167,6 +169,7 @@
 				}else if(e.data === 1){//song playing
 					_this.scrubber.removeAttribute('disabled');
 
+					PlayerEvents.$emit('playing', _this.songPlaying);
 					_this.playTimer = setInterval(function(){
 						_this.updateScrubber();
 					}, 100);
@@ -178,19 +181,19 @@
 			updateScrubber: function(){
 				var _this = this;
 
-				_this.playPercent = (_this.player.getCurrentTime() / _this.player.getDuration()) * 100;
+				_this.playPercent = (player.getCurrentTime() / player.getDuration()) * 100;
 				_this.scrubber.noUiSlider.set(_this.playPercent);
 			},
 			changeVolume: function(vol){
 				var _this = this;
 
-				if(!_this.player){
+				if(!player){
 					return false;
 				}
 
 				var volume = vol[0] / 1;
 
-				_this.player.setVolume(volume);
+				player.setVolume(volume);
 			},
 			slide: function(){
 				this.playPause();
@@ -205,16 +208,19 @@
 			changePlace: function(t){
 				var _this = this;
 
-				if(!_this.player){
+				if(!player){
 					return false;
 				}
 
-				var time = _this.player.getDuration() * (t[0] / 100);
-				_this.player.playVideo();
-				_this.player.seekTo(time);
+				var time = player.getDuration() * (t[0] / 100);
+				player.playVideo();
+				player.seekTo(time);
 
 				_this.playing = true;
 				_this.playPercent = time * 100;
+			},
+			queueSong: function(song){
+				// _this.
 			}
 		}
 	}

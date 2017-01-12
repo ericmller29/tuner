@@ -20,4 +20,8 @@
 	@include bp(medium){
 		padding-left: 240px;
 	}
+
+	@include bp(small){
+		padding-left: 120px;
+	}
 }

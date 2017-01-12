@@ -4,6 +4,9 @@
 	top: 50%;
 	right: 0;
 	transform: translateY(-50%);
+	z-index: 999;
+	width: 100%;
+	text-align: right;
 
 	// .btn{
 	// 	margin-right: 10px;
@@ -33,6 +36,29 @@
 		display: inline-block;
 		vertical-align: middle;
 		color: #444;
+
+		@include bp(small){
+			display: none;
+			width: 100%;
+			position: absolute;
+			background: #fff;
+			z-index: 9999;
+			span,img{
+				display: none;
+			}
+			a{
+				display: block;
+				width: 100%;
+				padding: 10px;
+				margin-left: 0;
+				text-align: left;
+				border-top: solid 1px #eee;
+
+				&:first-child{
+					border-top: none;
+				}
+			}
+		}
 	}
 	// .user-nav a{
 	// 	display: inline-block;

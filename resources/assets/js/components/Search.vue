@@ -29,7 +29,7 @@
 						<i class="fa fa-plus"></i>
 						Add
 					</button>
-					<button type="button" class="btn danger" v-if="song.user_saved">
+					<button type="button" class="btn danger" v-if="song.user_saved" @click="removeSong(song)">
 						<i class="fa fa-trash"></i>
 						Remove
 					</button>
@@ -74,7 +74,7 @@
 </template>
 <script>
 	export default{
-		props: ['searching', 'currentSong'],
+		props: ['searching', 'currentSong', 'role'],
 		data: function(){
 			return {
 				query: '',
@@ -84,6 +84,7 @@
 				loading: false,
 				showInfoModal: false,
 				success: false,
+				activeSong: null,
 				songInfo: {
 					youtube_id: '',
 					song_name: '',
@@ -93,15 +94,9 @@
 				}
 			}
 		},
-		mounted(){
-			var _this = this;
-
-			console.log(this.currentSong);
-		},
 		methods: {
 			search: function(e){
 				var _this = this;
-
 				window.clearTimeout(_this.typeTimer);
 
 				if(_this.query.replace(" ", "") === ''){
@@ -144,6 +139,8 @@
 					.then(function(payload){
 						var data = payload.data;
 						
+						_this.activeSong = song;
+
 						if(!data.song_found){
 							_this.showInfoModal = true;
 
@@ -163,11 +160,10 @@
 			},
 			addSong: function(song){
 				var _this = this;
-
 				axios.post('/app/song/create', _this.songInfo)
 					.then(function(payload){
 						_this.success = true;
-
+						_this.activeSong.user_saved = true;
 						setTimeout(() => {
 							_this.showInfoModal = false;
 							_this.success = false;
@@ -176,6 +172,16 @@
 					.catch(function(err){
 						console.log(err.response.data);
 					});
+			},
+			removeSong: function(song){
+				var _this = this;
+
+				_this.activeSong = song;
+
+				axios.post('/app/song/delete', { songId: song.id.videoId })
+					.then(function(payload){
+						_this.activeSong.user_saved = false;
+					})
 			}
 		}
 	}

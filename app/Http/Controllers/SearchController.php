@@ -22,9 +22,11 @@ class SearchController extends Controller
     			$i->snippet->title = $song->artist . ' - ' . $song->song_name;
     			$i->recommended = true;
     			$i->user_saved = (isset($userSaved)) ? true : false;
-    		}
 
-    		$parsedResults[] = $i;
+                array_unshift($parsedResults, $i);
+    		}else{
+                $parsedResults[] = $i;
+            }
     	}
 
     	if($request->ajax()){
