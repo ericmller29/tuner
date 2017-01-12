@@ -105,7 +105,8 @@
 					playerVars: {
 						'showinfo': 0,
 						'controls': 0, 
-						'rel' : 0
+						'rel' : 0,
+						'playsinline': 1
 					}
 				});
 			}
