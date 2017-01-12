@@ -17,10 +17,17 @@ const app = new Vue({
     data: {
     	showLoginModal: false,
     	showRegisterModal: false,
-        searching: false
+        searching: false,
+        currentSong: null
     },
     mounted(){
+        var _this = this;
+
         AppEvents.$on('search', this.search);
+
+        PlayerEvents.$on('playing', (id) => {
+            _this.currentSong = id;
+        });
     },
     methods: {
     	playPause: function(){

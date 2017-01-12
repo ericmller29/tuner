@@ -74,7 +74,7 @@
 </template>
 <script>
 	export default{
-		props: ['searching'],
+		props: ['searching', 'currentSong'],
 		data: function(){
 			return {
 				query: '',
@@ -82,7 +82,6 @@
 				typeTimer: null,
 				results: [],
 				loading: false,
-				currentSong: null,
 				showInfoModal: false,
 				success: false,
 				songInfo: {
@@ -96,9 +95,8 @@
 		},
 		mounted(){
 			var _this = this;
-			PlayerEvents.$on('playing', (id) => {
-				_this.currentSong = id;
-			});
+
+			console.log(this.currentSong);
 		},
 		methods: {
 			search: function(e){
