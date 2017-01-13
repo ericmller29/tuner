@@ -133,8 +133,8 @@
 			},
 			playPause: function(song){
 				var _this = this,
-					songSplit = song.snippet.title.split('-');
-
+					songSplit = song.snippet.title.split(/-|:/);
+				console.log(songSplit);
 				if(_this.songPlaying === song.id.videoId){
 					if(_this.playing){
 						player.pauseVideo();

@@ -18,10 +18,16 @@ class SearchController extends Controller
     		$song = Song::where('youtube_id', '=', $i->id->videoId)->first();
 
     		if(isset($song)){
-    			$userSaved = Auth::user()->songs->find($song->id);
+                if(Auth::check()){
+                    $userSaved = Auth::user()->songs->find($song->id);
+                    
+                    $i->user_saved = (isset($userSaved)) ? true : false;
+                }else{
+                    $userSaved = false;
+                    $i->user_saved = false;
+                }
     			$i->snippet->title = $song->artist . ' - ' . $song->song_name;
     			$i->recommended = true;
-    			$i->user_saved = (isset($userSaved)) ? true : false;
 
                 array_unshift($parsedResults, $i);
     		}else{
